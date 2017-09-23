@@ -1,0 +1,1 @@
+This is a project to get familiar with search algorithms that will be useful for AI.
