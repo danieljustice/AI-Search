@@ -22,8 +22,7 @@ class Problem:
         returns true if it is a goal state, false otherwise"""
         return self.goal_func(state)
 
-    def path_cost(self, state1, action):
-        """Each action should have a cost to it and each state should
-        have a total path_cost describing the cost it took to get to that
-        state. Return the added cost of this action to state1's path cost"""
-        return state1.path_cost + action.cost
+    def path_cost(self, current_cost, state1, action, state2):
+        """Currently just adds 1 to the current_cost. Only works for 
+        uniform cost graphs. Expected override for non-uniform costs"""
+        return current_cost + 1
