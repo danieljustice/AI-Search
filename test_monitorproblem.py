@@ -47,3 +47,23 @@ class TestMonitorProblemClass(unittest.TestCase):
         mon_prob3 = MonitorProblem([1, 2, 3], [])
         actions3 = mon_prob3.actions([1, 0, 0])
         assert actions3 == []
+
+    def test_is_goal(self):
+        mon_prob = MonitorProblem(['x', 'y', 'z'], ['a', 'b', 'c'])
+        assert mon_prob.goal_test([1, 2, 3]) == True
+        assert mon_prob.goal_test([1, 2, 0]) == False
+        assert mon_prob.goal_test([0, 2, 3]) == False
+        #if there is a phantom sensor added, lets just count it
+        assert mon_prob.goal_test([1, 2, 0, 3]) == True
+        assert mon_prob.goal_test([3, 1, 2]) == True
+
+
+        mon_prob3 = MonitorProblem([1, 2, 3], [])
+        assert mon_prob3.goal_test([]) == True
+        #assigning sensors to targets that dont exist? thats ok
+        assert mon_prob3.goal_test([1, 2, 3]) == True
+        
+    def test_path_cost(self):
+        mon_prob = MonitorProblem([("S_1",1,1,100), ("S_2",2,3,88), ("S_3",1,5,120), ("S_4",1,4,240)], [("T_1",1,2), ("T_2",3,3), ("T_3",0,5)])
+       
+        assert mon_prob.path_cost([1, 0, 0, 0]) == 100
