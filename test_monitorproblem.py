@@ -71,4 +71,4 @@ class TestMonitorProblemClass(unittest.TestCase):
     def test_time_monitored(self):
         mon_prob = MonitorProblem('[("S_1",1,1,100), ("S_2",2,3,88), ("S_3",1,5,120), ("S_4",1,4,240)]', '[("T_1",1,2), ("T_2",3,3), ("T_3",0,5)]')
         time = mon_prob.time_monitored(("S_2",2,3,88),("T_2",3,3))
-        assert time == 0
+        assert time == 88
