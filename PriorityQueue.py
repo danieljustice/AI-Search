@@ -29,7 +29,12 @@ class PriorityQueue:
         return len(self.items)
 
     def __contains__(self, item):
-        return(item == tuple[1] for tuple in self.items)
+        is_contained = False
+        for items in self.items:
+            #print(item == items[1])
+            if item == items[1]:
+                is_contained = True
+        return is_contained
 
     def __getitem__(self, key):
         for (_, item) in self.items:

@@ -1,10 +1,11 @@
 from problem import Problem
 import math
+from ast import literal_eval as make_tuple
 class MonitorProblem(Problem):
     def __init__(self, sensors, targets):
-        self.sensors = sensors
-        self.targets = targets
-        self.initial_state = [0 for sensor in self.sensors]
+        self.sensors = self.split_into_tuples(sensors)
+        self.targets = self.split_into_tuples(targets)
+        self.initial = [0 for sensor in self.sensors]
 
     def actions(self, state):
         #if last sensor in state is not 0, then all sensors are assigned a target, no possible actions left
@@ -29,6 +30,8 @@ class MonitorProblem(Problem):
 
     def resulting_state(self, state, action):
         #the result of going to the next state is the state
+        #print(action," costs ", self.path_cost(action))
+
         return action
     
     def goal_test(self, state):
@@ -40,28 +43,33 @@ class MonitorProblem(Problem):
                 is_goal = False
         return is_goal
 
-    def path_cost(self, state):
+    def path_cost(self, state, c = None, action = None, state2 = None):
         path_cost_list = []
         sensor_index = 0
+        print("state: ", state)
         for sensor in state:
             if sensor != 0:
                 individual_cost = self.time_monitored(self.sensors[sensor_index], self.targets[sensor-1])
+                print("sensor: ", self.sensors[sensor_index], " target: ", self.targets[sensor-1], " cost: ", individual_cost)
                 path_cost_list.append(individual_cost)
             else:
                 path_cost_list.append(0)
-        sensor_index += 1
+            sensor_index += 1
 
         for i, this_sensor in enumerate(state):
             for j, other_sensor in enumerate(state):
                 if i != j:
                     if this_sensor == other_sensor:
                         if path_cost_list[i] < path_cost_list[j]:
-                            path_cost_list[i] = 0
+                            path_cost_list[i] = path_cost_list[j]
                         else:
-                            path_cost_list[j] = 0
-
-        
-        return sum(path_cost_list)
+                            path_cost_list[j] = path_cost_list[i]
+        #print ("state: ", state, "   path cost: ",  path_cost_list)
+        path_cost_list[:] = [x for x in path_cost_list if x != 0]
+        #print ("state: ", state, "   path cost: ",  path_cost_list)
+        #print (path_cost_list, " min: ", min(path_cost_list))
+        #print(state, "costs ", path_cost_list, " sum: ", sum(path_cost_list))
+        return -min(path_cost_list)
 
 
 
@@ -77,14 +85,27 @@ class MonitorProblem(Problem):
 
     def time_monitored(self, sensor, target):
         #get euclidean distance
-        print(sensor)
-        print(target)
+        #print(sensor)
+        #print(target)
         x = sensor[1] - target[1]
-        print(x)
+        #print(x)
         y = sensor[2] - target[2]
         distance = math.sqrt(x**2 + y**2)
-        print(distance)
+        #print(distance)
         #time is power divided by distance
         time = sensor[3]/distance
-        print(time)
+        #print(time)
         return time
+
+    def split_into_tuples(self, string):
+
+        temp_str = string.replace("[", "")
+        temp_str = temp_str.replace("]", "")
+        if temp_str == "":
+            return []
+        tuple_string_list = temp_str.split(", ")
+        tuple_list = []
+        for sensor in tuple_string_list:
+            tuple_list.append(make_tuple(sensor))
+        return tuple_list
+

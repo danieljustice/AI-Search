@@ -14,8 +14,9 @@ class Node:
         """create a child node from this node based off of the
         problem and current action"""
         next_node = problem.resulting_state(self.state, action)
+
         return Node(next_node, self, action,
-                    problem.path_cost(self.path_cost, self.state, action, next_node))
+                    problem.path_cost(next_node, self.path_cost, action, next_node))
 
     def expand_frontier(self, problem):
         """Returns all of the child nodes from this node"""
