@@ -1,6 +1,7 @@
 from MonitorProblem import MonitorProblem
 from UniCost import UniCost
 from BreadthFirst import BreadthFirst
+from IDDFS import IDDFS
 class Wrapper:
     def main(self):
         #Take in config file
@@ -19,7 +20,8 @@ class Wrapper:
             print(BreadthFirst().breadth_first_tree_search(problem).state)
         elif search_type == 'unicost':
             print(UniCost().uniform_cost_search(problem).state)
-
+        elif search_type == 'iddfs':
+            print(IDDFS().Iterative_Deepening_Search(problem).state)
 
 if __name__ == '__main__':
    Wrapper().main()
