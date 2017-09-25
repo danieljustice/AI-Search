@@ -1,5 +1,6 @@
 from MonitorProblem import MonitorProblem
 from UniCost import UniCost
+from BreadthFirst import BreadthFirst
 class Wrapper:
     def main(self):
         #Take in config file
@@ -13,7 +14,11 @@ class Wrapper:
         else:
             print("Not a supported type of problem.")
 
-        print(UniCost().uniform_cost_search(problem).state)
+        search_type = input("What type of search would you like to perform?")
+        if(search_type == 'bfs'):
+            print(BreadthFirst().breadth_first_tree_search(problem).state)
+        elif search_type == 'unicost':
+            print(UniCost().uniform_cost_search(problem).state)
 
 
 if __name__ == '__main__':

@@ -46,11 +46,11 @@ class MonitorProblem(Problem):
     def path_cost(self, state, c = None, action = None, state2 = None):
         path_cost_list = []
         sensor_index = 0
-        print("state: ", state)
+        #print("state: ", state)
         for sensor in state:
             if sensor != 0:
                 individual_cost = self.time_monitored(self.sensors[sensor_index], self.targets[sensor-1])
-                print("sensor: ", self.sensors[sensor_index], " target: ", self.targets[sensor-1], " cost: ", individual_cost)
+                #print("sensor: ", self.sensors[sensor_index], " target: ", self.targets[sensor-1], " cost: ", individual_cost)
                 path_cost_list.append(individual_cost)
             else:
                 path_cost_list.append(0)
