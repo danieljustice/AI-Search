@@ -33,8 +33,8 @@ class UniCost:
                 explored.append(node.state)
                 #array of child nodes
                 frontier_nodes = node.expand_frontier(problem)
-                frontier_states = [(x.state, x.path_cost) for x in frontier_nodes]
-                print("frontier: ", frontier_states)
+                #frontier_states = [(x.state, x.path_cost) for x in frontier_nodes]
+                #print("frontier: ", frontier_states)
                 #push them onto pq
                 for fnode in frontier_nodes:
                     #dont want duplicates, so can't exist in explored or pq
@@ -43,10 +43,10 @@ class UniCost:
                     #if by chance there is a duplicate node in frontier,
                     #delete the "larger"/worst node
                     elif fnode in pq:
-                        print(fnode.node_path())
-                        print(pq.size())
+                        #print(fnode.node_path())
+                        #print(pq.size())
                         current_node = pq[fnode]
-                        print(current_node)
+                        #print(current_node)
                         if fnode.path_cost < current_node.path_cost:
                             del pq[current_node]
                             pq.enqueue(fnode)
