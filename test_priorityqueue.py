@@ -114,3 +114,12 @@ class TestPriorityQueueClass(unittest.TestCase):
         assert pq.size() == 1
         pq.dequeue()
         assert pq.size() == 0
+
+    def test_in_fucntionality(self):
+        pq = PriorityQueue()
+        assert 1 not in pq
+
+        pq.enqueue(1)
+        assert 1 in pq
+        assert 2 not in pq
+

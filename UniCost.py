@@ -7,7 +7,7 @@ class UniCost:
         f = lambda node: node.path_cost
 
         #make node from initial node
-        node = Node(problem.initial)
+        node = Node(problem.initial,None, None, 0)
 
         #create pq for frontier
         pq = PriorityQueue(min, f)
@@ -18,20 +18,23 @@ class UniCost:
         #set of explored states
         #use set because contains is quicker in sets than lists
         #set of states, not nodes because we dont want duplicate states, nodes dont matter
-        explored = set()
+        explored = []
 
         #loop until pq is empty ---- or goal state is reached?
         while pq:
             node = pq.dequeue()
+            #print("woot", node.state, " costs ", node.path_cost)
             #check if it is goal state
             if problem.goal_test(node.state):
                 #if goal state return node
                 return node
             #otherwise, build out new nodes and push to pq
             else:
-                explored.add(node.state)
+                explored.append(node.state)
                 #array of child nodes
-                frontier_nodes = node.expand_frontier()
+                frontier_nodes = node.expand_frontier(problem)
+                frontier_states = [(x.state, x.path_cost) for x in frontier_nodes]
+                print("frontier: ", frontier_states)
                 #push them onto pq
                 for fnode in frontier_nodes:
                     #dont want duplicates, so can't exist in explored or pq
@@ -40,8 +43,11 @@ class UniCost:
                     #if by chance there is a duplicate node in frontier,
                     #delete the "larger"/worst node
                     elif fnode in pq:
+                        print(fnode.node_path())
+                        print(pq.size())
                         current_node = pq[fnode]
-                        if f(fnode) < f(current_node):
+                        print(current_node)
+                        if fnode.path_cost < current_node.path_cost:
                             del pq[current_node]
                             pq.enqueue(fnode)
         #if a node was not returned at this point, nothing matches the goal state
