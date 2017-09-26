@@ -17,7 +17,11 @@ class Wrapper:
         problem = None
         if config[0] == 'monitor':
             problem = MonitorProblem(config[1], config[2])
-            self.search(search_type, problem)
+            answer = self.search(search_type, problem)
+            if(answer is None):
+                print("None for this search.")
+            else:
+                print(answer.state, ",  ", answer.path_cost)
         elif config[0] == 'aggregation':
             cities = config[1]
             cities_list = make_tuple(cities)

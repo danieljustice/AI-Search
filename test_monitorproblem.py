@@ -66,7 +66,7 @@ class TestMonitorProblemClass(unittest.TestCase):
     def test_path_cost(self):
         mon_prob = MonitorProblem('[("S_1",1,1,100), ("S_2",2,3,88), ("S_3",1,5,120), ("S_4",1,4,240)]', '[("T_1",1,2), ("T_2",3,3), ("T_3",0,5)]')
        
-        assert mon_prob.path_cost(None, [1, 0, 0, 0]) == -100
+        assert mon_prob.path_cost(None, None, None, [1, 0, 0, 0]) == -100
 
     def test_time_monitored(self):
         mon_prob = MonitorProblem('[("S_1",1,1,100), ("S_2",2,3,88), ("S_3",1,5,120), ("S_4",1,4,240)]', '[("T_1",1,2), ("T_2",3,3), ("T_3",0,5)]')

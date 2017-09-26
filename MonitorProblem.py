@@ -47,7 +47,7 @@ class MonitorProblem(Problem):
         path_cost_list = []
         sensor_index = 0
         #print("state: ", state)
-        for sensor in state:
+        for sensor in state2:
             if sensor != 0:
                 individual_cost = self.time_monitored(self.sensors[sensor_index], self.targets[sensor-1])
                 #print("sensor: ", self.sensors[sensor_index], " target: ", self.targets[sensor-1], " cost: ", individual_cost)
@@ -56,8 +56,8 @@ class MonitorProblem(Problem):
                 path_cost_list.append(0)
             sensor_index += 1
 
-        for i, this_sensor in enumerate(state):
-            for j, other_sensor in enumerate(state):
+        for i, this_sensor in enumerate(state2):
+            for j, other_sensor in enumerate(state2):
                 if i != j:
                     if this_sensor == other_sensor:
                         if path_cost_list[i] < path_cost_list[j]:
