@@ -5,15 +5,20 @@ class BreadthFirst:
         queue = Queue()
         node = Node(problem.initial, None, None, 0)
         queue.enqueue(node)
-
-        while queue:
+        #print("problem initial = ",  problem.initial)
+        while not queue.is_empty():
             node = queue.dequeue()
+            #print(node.state)
             if(problem.goal_test(node.state)):
+                #print("goal reached: ", node.state)
                 return node
            
             frontier_nodes = node.expand_frontier(problem)
+            #print("frontier: ", frontier_nodes.state)
             for fnode in frontier_nodes:
-                queue.enqueue(fnode)
+                #print(fnode)
+                if(fnode != None):
+                    queue.enqueue(fnode)
 
         return None
 
