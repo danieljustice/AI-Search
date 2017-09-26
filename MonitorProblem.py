@@ -43,7 +43,7 @@ class MonitorProblem(Problem):
                 is_goal = False
         return is_goal
 
-    def path_cost(self, state, c = None, action = None, state2 = None):
+    def path_cost(self, c, state, action = None, state2 = None):
         path_cost_list = []
         sensor_index = 0
         #print("state: ", state)

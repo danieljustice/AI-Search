@@ -1,10 +1,10 @@
 class Problem:
     """Abstract Class that describes the fucntionality of a search problem"""
-    def __init__(self, initial_state, goal_func=None):
+    def __init__(self, initial, goal_func=None):
         """Constructor function that takes in the intial state of the problem
         and the function that describes a succesful goal. If no goal_func
         is given it will be assumed there is no goal function."""
-        self.initial_state = initial_state
+        self.initial = initial
         self.goal_func = goal_func
 
     def actions(self, state):
