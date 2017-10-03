@@ -6,6 +6,9 @@ class Problem:
         is given it will be assumed there is no goal function."""
         self.initial = initial
         self.goal_func = goal_func
+        self.time = 0
+        self.visited = 0
+        self.frontier = 0
 
     def actions(self, state):
         """Returns the possible actions that can be executed from the
@@ -26,3 +29,8 @@ class Problem:
         """Currently just adds 1 to the current_cost. Only works for 
         uniform cost graphs. Expected override for non-uniform costs"""
         return current_cost + 1
+
+    def value(self, state):
+        """For optimization problems, each state has a value.  Hill-climbing
+        and related algorithms try to maximize this value."""
+        raise NotImplementedError
