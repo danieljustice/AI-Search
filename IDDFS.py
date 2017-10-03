@@ -42,6 +42,9 @@ class IDDFS:
         return self.recursive_DLS(Node(problem.initial), problem, limit)
 
     def recursive_DLS(self, node, problem, limit=1):
+        problem.time += 1
+        if(problem.frontier < node.depth):
+            problem.frontier = node.depth
         if(problem.goal_test(node.state)):
             return node
         elif limit == 0:
@@ -50,6 +53,7 @@ class IDDFS:
             cutoff_occurred = False
             for action in problem.actions(node.state):
                 child = node.child_node(problem, action)
+                problem.visited += 1
                 result = self.recursive_DLS(child, problem, limit-1)
                 if result == 'cutoff':
                     cutoff_occurred = True

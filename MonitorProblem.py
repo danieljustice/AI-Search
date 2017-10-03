@@ -3,9 +3,12 @@ import math
 from ast import literal_eval as make_tuple
 class MonitorProblem(Problem):
     def __init__(self, sensors, targets):
-        self.sensors = self.split_into_tuples(sensors)
-        self.targets = self.split_into_tuples(targets)
+        self.sensors = make_tuple(sensors)
+        self.targets = make_tuple(targets)
         self.initial = [0 for sensor in self.sensors]
+        self.time = 0
+        self.visited = 0
+        self.frontier = 0
 
     def actions(self, state):
         #if last sensor in state is not 0, then all sensors are assigned a target, no possible actions left
@@ -87,6 +90,7 @@ class MonitorProblem(Problem):
         #get euclidean distance
         #print(sensor)
         #print(target)
+        #print(sensor, " ", target[1])
         x = sensor[1] - target[1]
         #print(x)
         y = sensor[2] - target[2]
@@ -109,3 +113,20 @@ class MonitorProblem(Problem):
             tuple_list.append(make_tuple(sensor))
         return tuple_list
 
+    def value(self, state):
+        """give increased value to states where sensors are closer to targets"""
+        sum_of_closest = 0
+        index = 1
+        for target in self.targets:
+            if(index not in state):
+                sum_of_closest += self.find_closest_sensor(target)[0]
+        return sum_of_closest
+
+    def find_closest_sensor(self, target):
+        distances = []
+        for sensor in self.sensors:
+            x = sensor[1] - target[1]
+            y = sensor[2] - target[2]
+            distances.append(math.sqrt(x**2 + y**2))
+        min_d = min(distances)
+        return (min_d, distances.index(min_d))

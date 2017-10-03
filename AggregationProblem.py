@@ -10,6 +10,9 @@ name variables as such
 
 class AggregationProblem(Problem):
     def __init__(self, cities, roads, initial = None):
+        self.time = 0
+        self.visited = 0
+        self.frontier = 0
         self.cities = make_tuple(cities)
         #print("length: ", len(self.cities), "cities: ", self.cities)
         self.roads =  [make_tuple(road.replace("\n", "")) for road in roads if road != " "]                  #self.split_into_tuples(roads)
@@ -72,3 +75,20 @@ class AggregationProblem(Problem):
         for sensor in tuple_string_list:
             tuple_list.append(make_tuple(sensor))
         return tuple_list
+    
+    def value(self, state):
+        """give increased value to states where 
+        current city is closer to all the other un-visited cities"""
+        sum_of_distances = 0
+        for city in self.cities:
+            if city[0] not in state:
+                for current_city in self.cities:
+                    if current_city[0] == state[len(state)-1]:
+                        sum_of_distances += self.find_distance(current_city, city)
+    
+        return sum_of_distances
+
+    def find_distance(self, city1, city2):
+        x = city1[1] - city2[1]
+        y = city1[2] - city2[2]
+        return math.sqrt(x**2 + y**2)

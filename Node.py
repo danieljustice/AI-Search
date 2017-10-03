@@ -1,11 +1,12 @@
 from problem import Problem
 class Node:
     """Generalized Node class to work with any class inheriting the Problem.py."""
-    def __init__(self, state, parent=None, action=None, path_cost=0):
+    def __init__(self, state, parent=None, action=None, path_cost=0, heuristic_cost=0):
         self.state = state
         self.parent = parent
         self.action = action
         self.path_cost = path_cost
+        self.heuristic_cost = heuristic_cost
         self.depth = 0
         if parent:
             self.depth = parent.depth + 1
@@ -19,7 +20,7 @@ class Node:
         if next_node is None:
             return None
         return Node(next_node, self, action,
-                    problem.path_cost(self.path_cost, self, action, next_node))
+                    problem.path_cost(self.path_cost, self.state, action, next_node))
 
     def expand_frontier(self, problem):
         """Returns all of the child nodes from this node"""

@@ -1,10 +1,10 @@
 from PriorityQueue import PriorityQueue
 from Node import Node
-class UniCost:
+class Greedy:
 
-    def uniform_cost_search(self, problem):
+    def greedy_cost_search(self, problem):
         #lambda function to compare in the priority queue
-        f = lambda node: node.path_cost
+        f = lambda node: problem.value(node.state)
 
         #make node from initial node
         node = Node(problem.initial,None, None, 0, 0)
@@ -23,7 +23,6 @@ class UniCost:
         #loop until pq is empty ---- or goal state is reached?
         while pq.size() > 0:
             node = pq.dequeue()
-           
             #print("woot", node.state, " costs ", node.path_cost)
             #check if it is goal state
             if problem.goal_test(node.state):
@@ -35,9 +34,6 @@ class UniCost:
                 problem.visited += 1
                 #array of child nodes
                 frontier_nodes = node.expand_frontier(problem)
-                #problem.time += len(frontier_nodes)
-                # if(len(frontier_nodes) > problem.frontier):
-                #     problem.frontier = len(frontier_nodes)
                 #frontier_states = [(x.state, x.path_cost) for x in frontier_nodes]
                 #print("frontier: ", frontier_states)
                 #push them onto pq
@@ -55,7 +51,7 @@ class UniCost:
                         #print(pq.size())
                         current_node = pq[fnode]
                         #print(current_node)
-                        if fnode.path_cost < current_node.path_cost:
+                        if f(fnode) < f(current_node):
                             del pq[current_node]
                             pq.enqueue(fnode)
         #if a node was not returned at this point, nothing matches the goal state
